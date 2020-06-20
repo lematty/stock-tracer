@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-type ImportTypes = 'CSV' | 'JSON';
+enum ImportTypes {
+  CSV = 'CSV',
+  JSON = 'JSON'
+}
+
 enum FormSteps {
-  Import = 'import',
   Type = 'type',
   Upload = 'upload',
 }
@@ -14,8 +17,9 @@ enum FormSteps {
 })
 export class DataImportModalComponent implements OnInit {
   FormSteps = FormSteps;
-  currentStep: FormSteps = FormSteps.Import;
-  importType: ImportTypes;
+  ImportTypes = ImportTypes;
+  currentStep: FormSteps = FormSteps.Type;
+  selectedImportType: ImportTypes;
 
   constructor() { }
 
@@ -27,7 +31,8 @@ export class DataImportModalComponent implements OnInit {
   }
 
   chooseImportType(type: ImportTypes) {
-    this.importType = type;
+    console.log(type);
+    this.selectedImportType = type;
     this.changeFormStep(FormSteps.Upload);
   }
 
@@ -35,13 +40,14 @@ export class DataImportModalComponent implements OnInit {
 
   }
 
-  csvInputChange(fileInputEvent: any) {
+  inputChange(fileInputEvent: any) {
+    console.log(fileInputEvent);
     console.log(fileInputEvent.target.files[0]);
   }
 
   cancelImport() {
-    this.changeFormStep(FormSteps.Import);
-    this.importType = undefined;
+    this.changeFormStep(FormSteps.Type);
+    this.selectedImportType = undefined;
   }
 
 }

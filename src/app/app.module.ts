@@ -17,6 +17,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DataImportModalComponent } from './data-import-modal/data-import-modal.component';
 
+// Services
+import { FileParseService } from './services/file-parse.service';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +39,7 @@ import { DataImportModalComponent } from './data-import-modal/data-import-modal.
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [],
+  providers: [FileParseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
