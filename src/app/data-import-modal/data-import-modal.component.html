@@ -1,0 +1,22 @@
+<div class="data-import-modal-container">
+  <div *ngIf="currentStep === FormSteps.Import" class="import-data-modal">
+    <h3>Import Data</h3>
+    <button mat-raised-button color="primary" (click)="changeFormStep(FormSteps.Type)">Go!</button>
+  </div>
+  
+  <div *ngIf="currentStep === FormSteps.Type" class="type-data-modal">
+    <h3>Choose file type</h3>
+    <div class="import-type-modal">
+      <button mat-raised-button color="primary" (click)="chooseImportType('CSV')">CSV</button>
+      <button mat-raised-button color="primary" (click)="chooseImportType('JSON')">JSON</button>
+    </div>
+    <button mat-raised-button color="warn" (click)="cancelImport()">Cancel</button>
+  </div>
+
+  <div *ngIf="currentStep === FormSteps.Upload" class="upload-data-modal">
+    <h3>Upload Data</h3>
+    <!-- <button mat-raised-button color="primary" (click)="uploadData()">Upload</button> -->
+    <input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="csvInputChange($event)" accept=".csv"/>
+    <button mat-flat-button color="primary" (click)="csvInput.click()">Upload</button>
+  </div>
+</div>
