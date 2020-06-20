@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FileParseService } from '../services/file-parse.service';
 
 enum ImportTypes {
   CSV = 'CSV',
@@ -21,7 +22,7 @@ export class DataImportModalComponent implements OnInit {
   currentStep: FormSteps = FormSteps.Type;
   selectedImportType: ImportTypes;
 
-  constructor() { }
+  constructor(private fileParseService: FileParseService) { }
 
   ngOnInit(): void {
   }
@@ -43,11 +44,16 @@ export class DataImportModalComponent implements OnInit {
   inputChange(fileInputEvent: any) {
     console.log(fileInputEvent);
     console.log(fileInputEvent.target.files[0]);
+    this.parseFile(fileInputEvent);
   }
 
   cancelImport() {
     this.changeFormStep(FormSteps.Type);
     this.selectedImportType = undefined;
+  }
+
+  parseFile(fileInputEvent: any) {
+    this.fileParseService.loadFile(fileInputEvent);
   }
 
 }
