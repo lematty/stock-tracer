@@ -6,20 +6,22 @@ import { HttpClientModule } from '@angular/common/http';
 // Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DataImportModalComponent } from './data-import-modal/data-import-modal.component';
 import { StockTableComponent } from './stock-table/stock-table.component';
 
 // Material Design Components
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
-import { DataImportModalComponent } from './data-import-modal/data-import-modal.component';
+import { MatTableModule } from '@angular/material/table';
 
 // Services
 import { FileParseService } from './services/file-parse.service';
+import { MatchColumnsModalComponent } from './match-columns-modal/match-columns-modal.component';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { FileParseService } from './services/file-parse.service';
     AppComponent,
     StockTableComponent,
     DashboardComponent,
-    DataImportModalComponent
+    DataImportModalComponent,
+    MatchColumnsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { FileParseService } from './services/file-parse.service';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
+    MatRadioModule,
     MatSidenavModule,
     MatTableModule,
     MatPaginatorModule,

@@ -1,0 +1,14 @@
+<div>
+  <h3 id="example-radio-group-label">Which of your columns is the {{ name }}</h3>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group">
+    <mat-radio-button (click)="selectHeader(i)" class="example-radio-button" *ngFor="let header of headers; let i = index" [value]="i">
+      {{ header }}
+    </mat-radio-button>
+    <mat-radio-button (click)="selectHeader(-1)" class="example-radio-button" [value]="undefined">None of them</mat-radio-button>
+  </mat-radio-group>
+  <div>
+    <button mat-raised-button color="primary" (click)="emitSelectedType(headerIndex)">Next</button>
+  </div>
+</div>

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Papa, ParseResult } from 'ngx-papaparse';
 
 const FILE_PATH = '../../assets/bourse.csv';
@@ -9,23 +8,22 @@ const FILE_PATH = '../../assets/bourse.csv';
 })
 export class FileParseService {
 
-  constructor(private http: HttpClient, private papa: Papa) {}
+  public headers = [];
+  public rows = [];
 
-  loadFile(file: string = FILE_PATH) {
-    this.http.get(file, { responseType: 'text' }).subscribe(
-      data => this.extractData(data),
-      error => console.log(error));
-  }
+  constructor(private papa: Papa) {}
 
-  extractData(data: string) {
-    this.papa.parse(data, {
-      header: true,
-      complete: (parseData: ParseResult) => {
-        this.headers = parseData.meta.fields;
-        this.rows = parseData.data;
-        console.log(this.headers);
-        console.log(this.rows);
-      }
+  extractData(data: File): Promise<{ headers: string[], rows: string[][] }> {
+    return new Promise((resolve, error) => {
+      this.papa.parse(data, {
+        header: true,
+        complete: (parseData: ParseResult) => {
+          this.headers = parseData.meta.fields;
+          this.rows = parseData.data;
+          resolve({ headers: this.headers, rows: this.rows });
+        },
+        error: (err: any) => error(err),
+      });
     });
   }
 }

@@ -1,12 +1,14 @@
 <div class="data-import-modal-container">
   <div *ngIf="currentStep === FormSteps.Type" class="import-modal-template">
-    <h3>Choose file type</h3>
+    <h1>Choose file type</h1>
     <div class="select-type-modal">
       <div class="csv-button">
-        <button mat-raised-button color="primary" (click)="chooseImportType(ImportTypes.CSV)">CSV</button>
+        <input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)" accept=".csv"/>
+        <button mat-raised-button color="primary" (click)="csvInput.click() && chooseImportType(ImportTypes.CSV)">CSV</button>
       </div>
       <div class="json-button">
-        <button mat-raised-button color="primary" (click)="chooseImportType(ImportTypes.JSON)">JSON</button>
+        <input #jsonInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)" accept=".json"/>
+        <button mat-raised-button color="primary" (click)="jsonInput.click() && chooseImportType(ImportTypes.JSON)">JSON</button>
       </div>
     </div>
     <div class="cancel-button">
@@ -14,19 +16,39 @@
     </div>
   </div>
 
-  <div *ngIf="currentStep === FormSteps.Upload" class="import-modal-template">
-    <h3>Upload Data</h3>
-    <!-- <button mat-raised-button color="primary" (click)="uploadData()">Upload</button> -->
-    <div *ngIf="selectedImportType === ImportTypes.CSV">
-      <input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)" accept=".csv"/>
-      <button mat-flat-button color="primary" (click)="csvInput.click()">Upload</button>
-    </div>
-    <div *ngIf="selectedImportType === ImportTypes.JSON">
-      <input #jsonInput hidden="true" type="file" onclick="this.value=null" (change)="inputChange($event)" accept=".json"/>
-      <button mat-flat-button color="primary" (click)="jsonInput.click()">Upload</button>
-    </div>
-    <div class="cancel-button">
-      <button mat-raised-button (click)="cancelImport()">Back</button>
-    </div>
+  <div *ngIf="headers.length">
+    <h1>Can you help us match your column names?</h1>
+    <app-match-columns-modal
+      *ngIf="currentStep === FormSteps.SelectTicker"
+      [name]="ImportMatchNames.Ticker"
+      [type]="ImportMatchTypes.Ticker"
+      [index]="0"
+      [headers]="headers"
+      (selectedType)="selectHeader($event)">
+    </app-match-columns-modal>
+    <app-match-columns-modal
+      *ngIf="currentStep === FormSteps.SelectShares"
+      [name]="ImportMatchNames.Shares"
+      [type]="ImportMatchTypes.Shares"
+      [index]="1"
+      [headers]="headers"
+      (selectedType)="selectHeader($event)">
+    </app-match-columns-modal>
+    <app-match-columns-modal
+      *ngIf="currentStep === FormSteps.SelectBuyPrice"
+      [name]="ImportMatchNames.BuyPrice"
+      [type]="ImportMatchTypes.BuyPrice"
+      [index]="2"
+      [headers]="headers"
+      (selectedType)="selectHeader($event)">
+    </app-match-columns-modal>
+    <app-match-columns-modal
+      *ngIf="currentStep === FormSteps.SelectDividendYeild"
+      [name]="ImportMatchNames.DividendYeild"
+      [type]="ImportMatchTypes.DividendYeild"
+      [index]="3"
+      [headers]="headers"
+      (selectedType)="selectHeader($event)">
+    </app-match-columns-modal>
   </div>
 </div>
