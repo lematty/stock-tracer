@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 // import { MatStepperModule } from '@angular/material/stepper';
@@ -47,6 +48,7 @@ import { MatchColumnsModalComponent } from './match-columns-modal/match-columns-
     // MatInputModule,
     MatRadioModule,
     // ReactiveFormsModule,
+    MatSelectModule,
     MatSidenavModule,
     MatTableModule,
     MatPaginatorModule,

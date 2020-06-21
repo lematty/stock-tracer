@@ -2,19 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DataImportModalComponent } from '../data-import-modal/data-import-modal.component';
-
-interface MatchData {
-  rank: any;
-  headers: string[];
-  rows: string[][];
-}
-
-enum ImportMatchTypes {
-  Ticker = 'ticker',
-  Shares = 'shares',
-  BuyPrice = 'buyPrice',
-  DividendYeild = 'dividendYeild',
-}
+import { MatchData } from '../models';
 
 @Component({
   selector: 'app-dashboard',

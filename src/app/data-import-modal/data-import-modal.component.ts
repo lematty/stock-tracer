@@ -1,8 +1,8 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FileParseService } from '../services/file-parse.service';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ImportMatchTypes, ImportMatchNames } from '../models';
 
 
 enum ImportTypes {
@@ -20,20 +20,6 @@ enum FormSteps {
   Success,
 }
 
-enum ImportMatchTypes {
-  Ticker = 'ticker',
-  Shares = 'shares',
-  BuyPrice = 'buyPrice',
-  DividendYeild = 'dividendYeild',
-}
-
-enum ImportMatchNames {
-  Ticker = 'ticker',
-  Shares = 'shares',
-  BuyPrice = 'buy price',
-  DividendYeild = 'dividend yeild',
-}
-
 interface MatchValidator {
   [type: string]: number;
 }
@@ -47,7 +33,6 @@ export class DataImportModalComponent {
 
   @Output() verifiedHeaders: EventEmitter<string[][]> = new EventEmitter();
   @Output() verifiedRows: EventEmitter<string[]> = new EventEmitter();
-  // @Output() closeModal: EventEmitter<void> = new EventEmitter();
 
   FormSteps = FormSteps;
   ImportTypes = ImportTypes;

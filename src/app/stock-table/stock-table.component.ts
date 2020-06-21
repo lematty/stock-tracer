@@ -16,7 +16,30 @@ export class StockTableComponent implements AfterViewInit, OnInit {
   dataSource: StockTableDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = [
+    'name',
+    'symbol',
+    'sector',
+    'shares',
+    'averagePrice',
+    'marketPrice',
+    'costBasis',
+    'marketValue',
+    'gainLoss',
+    'percentage',
+    'eps',
+    'pE',
+    'annualDividend',
+    'dividendYeild',
+    'yeildOnCost',
+    'annualIncome',
+    'modify',
+  ];
+
+  sectorTypes = [
+    'Technology',
+    'Oil/Gas'
+  ];
 
   ngOnInit() {
     this.dataSource = new StockTableDataSource();
