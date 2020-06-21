@@ -12,11 +12,11 @@
       </div>
     </div>
     <div class="cancel-button">
-      <button mat-raised-button (click)="cancelImport()">Back</button>
+      <button mat-raised-button (click)="cancel()">Back</button>
     </div>
   </div>
 
-  <div *ngIf="headers.length">
+  <div *ngIf="headers.length && currentStep !== FormSteps.Success">
     <h1>Can you help us match your column names?</h1>
     <app-match-columns-modal
       *ngIf="currentStep === FormSteps.SelectTicker"
@@ -50,5 +50,12 @@
       [headers]="headers"
       (selectedType)="selectHeader($event)">
     </app-match-columns-modal>
+  </div>
+
+  <div *ngIf="currentStep === FormSteps.Success" class="import-modal-template">
+    <h1>Success!</h1>
+    <div class="cancel-button">
+      <button mat-raised-button color="primary" (click)="cancel()">Close</button>
+    </div>
   </div>
 </div>

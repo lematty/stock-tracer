@@ -8,10 +8,10 @@ enum ImportMatchTypes {
 }
 
 enum ImportMatchNames {
-  Ticker = 'Ticker',
-  Shares = 'Shares',
-  BuyPrice = 'Buy Price',
-  DividendYeild = 'Dividend Yeild',
+  Ticker = 'ticker',
+  Shares = 'shares',
+  BuyPrice = 'buy price',
+  DividendYeild = 'dividend yeild',
 }
 
 @Component({

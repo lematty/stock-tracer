@@ -1,5 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { FileParseService } from '../services/file-parse.service';
+import { FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+
 
 enum ImportTypes {
   CSV = 'CSV',
@@ -7,13 +11,13 @@ enum ImportTypes {
 }
 
 enum FormSteps {
-  Type = 'type',
-  Loading = 'loading',
-  SelectTicker = 'selectTicker',
-  SelectShares = 'selectShares',
-  SelectBuyPrice = 'selectBuyPrice',
-  SelectDividendYeild = 'selectDividendYeild',
-  Success = 'success',
+  Type,
+  Loading,
+  SelectTicker,
+  SelectShares,
+  SelectBuyPrice,
+  SelectDividendYeild,
+  Success,
 }
 
 enum ImportMatchTypes {
@@ -24,18 +28,14 @@ enum ImportMatchTypes {
 }
 
 enum ImportMatchNames {
-  Ticker = 'Ticker',
-  Shares = 'Shares',
-  BuyPrice = 'Buy Price',
-  DividendYeild = 'Dividend Yeild',
+  Ticker = 'ticker',
+  Shares = 'shares',
+  BuyPrice = 'buy price',
+  DividendYeild = 'dividend yeild',
 }
-// type ImportMatchTypes =  'ticker' | 'shares' | 'buyPrice' | 'dividendYeild';
 
 interface MatchValidator {
-  [type: string]: {
-    index: number;
-    // header: string;
-  };
+  [type: string]: number;
 }
 
 @Component({
@@ -43,7 +43,11 @@ interface MatchValidator {
   templateUrl: './data-import-modal.component.html',
   styleUrls: ['./data-import-modal.component.less']
 })
-export class DataImportModalComponent implements OnInit {
+export class DataImportModalComponent {
+
+  @Output() verifiedHeaders: EventEmitter<string[][]> = new EventEmitter();
+  @Output() verifiedRows: EventEmitter<string[]> = new EventEmitter();
+  // @Output() closeModal: EventEmitter<void> = new EventEmitter();
 
   FormSteps = FormSteps;
   ImportTypes = ImportTypes;
@@ -52,15 +56,17 @@ export class DataImportModalComponent implements OnInit {
   currentStep: FormSteps = FormSteps.Type;
   selectedImportType: ImportTypes;
 
+
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+
   headers: string[] = [];
   rows: string[][] = [];
 
   rank: MatchValidator = {};
 
-  constructor(private fileParseService: FileParseService) { }
-
-  ngOnInit(): void {
-  }
+  constructor(public dialogRef: MatDialogRef<DataImportModalComponent>, private fileParseService: FileParseService) { }
 
   changeFormStep(step: FormSteps) {
     this.currentStep = step;
@@ -69,18 +75,12 @@ export class DataImportModalComponent implements OnInit {
   chooseImportType(type: ImportTypes) {
     console.log(type);
     this.selectedImportType = type;
-    // this.changeFormStep(FormSteps.Upload);
   }
 
   inputChange(fileInputEvent: any) {
     console.log(fileInputEvent);
     console.log(fileInputEvent.target.files[0]);
     this.parseFile(fileInputEvent.target.files[0]);
-  }
-
-  cancelImport() {
-    this.changeFormStep(FormSteps.Type);
-    this.selectedImportType = undefined;
   }
 
   async parseFile(fileInputEvent: any) {
@@ -94,14 +94,13 @@ export class DataImportModalComponent implements OnInit {
 
   selectHeader(selection: { type: ImportMatchTypes, index: number }) {
     if (selection.index && selection.index === -1) {
-      console.log('returning');
       return;
     }
     console.log(selection);
-    this.rank[selection.type] = {
-      index: selection.index,
-      // header,
-    };
+    this.rank[selection.type] = selection.index;
+    console.log(this.rank);
+    const nextStep = this.currentStep + 1;
+    this.changeFormStep(nextStep);
   }
 
   verifySelectedHeaders() {
@@ -114,6 +113,11 @@ export class DataImportModalComponent implements OnInit {
     return count === 4;
   }
 
-
-
+  cancel() {
+    // this.closeModal.emit();
+    this.dialogRef.close({ rank: this.rank, headers: this.headers, rows: this.rows });
+    // this.dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${JSON.stringify(result)}`);
+    // });
+  }
 }
