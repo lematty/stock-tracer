@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 // import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatchColumnsModalComponent } from './match-columns-modal/match-columns-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,8 +26,7 @@ import { MatTableModule } from '@angular/material/table';
 // import { MatInputModule } from '@angular/material/input';
 
 // Services
-import { FileParseService } from './services/file-parse.service';
-import { MatchColumnsModalComponent } from './match-columns-modal/match-columns-modal.component';
+import { CalculationsService, FileParseService, FormatTableDataService, StockDataService } from './services';
 
 
 @NgModule({
@@ -55,7 +55,12 @@ import { MatchColumnsModalComponent } from './match-columns-modal/match-columns-
     MatSortModule,
     // MatStepperModule,
   ],
-  providers: [FileParseService],
+  providers: [
+    CalculationsService,
+    FileParseService,
+    FormatTableDataService,
+    StockDataService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

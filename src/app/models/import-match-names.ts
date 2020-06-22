@@ -1,5 +1,5 @@
 export enum ImportMatchNames {
-  Ticker = 'ticker',
+  Symbol = 'symbol',
   Shares = 'shares',
   BuyPrice = 'buy price',
   DividendYeild = 'dividend yeild',

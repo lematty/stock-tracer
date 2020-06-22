@@ -1,18 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
-enum ImportMatchTypes {
-  Ticker = 'ticker',
-  Shares = 'shares',
-  BuyPrice = 'buyPrice',
-  DividendYeild = 'dividendYeild',
-}
-
-enum ImportMatchNames {
-  Ticker = 'ticker',
-  Shares = 'shares',
-  BuyPrice = 'buy price',
-  DividendYeild = 'dividend yeild',
-}
+import { ImportMatchTypes, ImportMatchNames } from '../models';
 
 @Component({
   selector: 'app-match-columns-modal',
@@ -35,12 +22,10 @@ export class MatchColumnsModalComponent implements OnInit {
   }
 
   selectHeader(headerIndex: number) {
-    console.log('selectHeader() => headerIndex: ', headerIndex);
     this.headerIndex = headerIndex;
   }
 
   emitSelectedType() {
-    console.log('emitSelectedType() => headerIndex: ', this.headerIndex);
     this.selectedType.emit({ type: this.type, index: this.headerIndex });
   }
 

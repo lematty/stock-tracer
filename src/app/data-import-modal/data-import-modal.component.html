@@ -19,9 +19,9 @@
   <div *ngIf="headers.length && currentStep !== FormSteps.Success">
     <h1>Can you help us match your column names?</h1>
     <app-match-columns-modal
-      *ngIf="currentStep === FormSteps.SelectTicker"
-      [name]="ImportMatchNames.Ticker"
-      [type]="ImportMatchTypes.Ticker"
+      *ngIf="currentStep === FormSteps.SelectSymbol"
+      [name]="ImportMatchNames.Symbol"
+      [type]="ImportMatchTypes.Symbol"
       [index]="0"
       [headers]="headers"
       (selectedType)="selectHeader($event)">

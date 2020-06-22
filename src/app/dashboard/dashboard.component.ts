@@ -36,12 +36,11 @@ export class DashboardComponent implements OnInit {
   }
 
   formatMatches(matchData: MatchData) {
-    console.log('formatMatches', matchData);
     let count = 0;
     const newRows = [];
     matchData.rows.forEach(row => {
       const newRow = {
-        ticker: '',
+        symbol: '',
         shares: '',
         buyPrice: '',
         dividendYeild: ''
@@ -55,7 +54,5 @@ export class DashboardComponent implements OnInit {
       count++;
     });
     this.formattedImportData = newRows;
-    console.log(this.formattedImportData);
   }
-
 }

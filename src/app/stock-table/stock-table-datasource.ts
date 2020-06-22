@@ -25,15 +25,15 @@ export interface StockTableItem {
 }
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: StockTableItem[] = [
-  {
-    name: 'Apple',
-    symbol: 'AAPL',
-    shares: 7,
-    averagePrice: 300,
-    dividendYeild: 100,
-  },
-];
+// const EXAMPLE_DATA: StockTableItem[] = [
+//   {
+//     name: 'Apple',
+//     symbol: 'AAPL',
+//     shares: 7,
+//     averagePrice: 300,
+//     dividendYeild: 100,
+//   },
+// ];
 
 /**
  * Data source for the StockTable view. This class should
@@ -41,11 +41,11 @@ const EXAMPLE_DATA: StockTableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class StockTableDataSource extends DataSource<StockTableItem> {
-  data: StockTableItem[] = EXAMPLE_DATA;
+  // data: StockTableItem[] = EXAMPLE_DATA;
   paginator: MatPaginator;
   sort: MatSort;
 
-  constructor() {
+  constructor(private data: StockTableItem[]) {
     super();
   }
 

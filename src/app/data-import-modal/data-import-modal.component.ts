@@ -13,7 +13,7 @@ enum ImportTypes {
 enum FormSteps {
   Type,
   Loading,
-  SelectTicker,
+  SelectSymbol,
   SelectShares,
   SelectBuyPrice,
   SelectDividendYeild,
@@ -58,13 +58,10 @@ export class DataImportModalComponent {
   }
 
   chooseImportType(type: ImportTypes) {
-    console.log(type);
     this.selectedImportType = type;
   }
 
   inputChange(fileInputEvent: any) {
-    console.log(fileInputEvent);
-    console.log(fileInputEvent.target.files[0]);
     this.parseFile(fileInputEvent.target.files[0]);
   }
 
@@ -73,17 +70,14 @@ export class DataImportModalComponent {
     const csvData = await this.fileParseService.extractData(fileInputEvent);
     this.headers = csvData.headers;
     this.rows = csvData.rows;
-    console.log(this.headers, this.rows);
-    this.currentStep = FormSteps.SelectTicker;
+    this.currentStep = FormSteps.SelectSymbol;
   }
 
   selectHeader(selection: { type: ImportMatchTypes, index: number }) {
     if (selection.index && selection.index === -1) {
       return;
     }
-    console.log(selection);
     this.rank[selection.type] = selection.index;
-    console.log(this.rank);
     const nextStep = this.currentStep + 1;
     this.changeFormStep(nextStep);
   }
@@ -99,10 +93,6 @@ export class DataImportModalComponent {
   }
 
   cancel() {
-    // this.closeModal.emit();
     this.dialogRef.close({ rank: this.rank, headers: this.headers, rows: this.rows });
-    // this.dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${JSON.stringify(result)}`);
-    // });
   }
 }
