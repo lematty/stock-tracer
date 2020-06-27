@@ -10,6 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AddStockFormComponent implements OnInit {
 
   @Output() addNewRow: EventEmitter<BaseRow> = new EventEmitter();
+  @Output() closeForm: EventEmitter<void> = new EventEmitter();
 
   row: FormGroup;
 
@@ -23,7 +24,7 @@ export class AddStockFormComponent implements OnInit {
   }
 
   close() {
-    // TODO: implement cancel
+    this.closeForm.emit();
   }
 
   nextStock() {

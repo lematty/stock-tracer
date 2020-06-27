@@ -4,4 +4,4 @@ export * from './base-row';
 export * from './import-match-names';
 export * from './import-match-types';
 export * from './match-data';
-export * from './stock-table-item';
+export * from './formatted-row';

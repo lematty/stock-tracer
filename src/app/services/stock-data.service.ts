@@ -1,18 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BaseRow, FormattedRow } from '../models';
+import { MockBackendService } from './mock-backend.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockDataService {
 
-  constructor(private http: HttpClient) { }
+  API_URL = 'API URL';
 
-  async fetchStockPrice(symbols: string[]): Promise<any> {
-    // this.http.get();
+  constructor(private http: HttpClient, private mockBackendService: MockBackendService) { }
+
+  addStock(stock: BaseRow): Observable<FormattedRow> {
+    console.log('StockDataService');
+    // return this.http.post<FormattedRow>(this.API_URL, stock);
+    const formattedStock = this.mockBackendService.addStock(stock);
+    return formattedStock;
   }
 
-  async fetchDividends(symbols: string[]): Promise<any> {
-    // this.http.get();
+  fetchStockPrice(symbols: string[]) {
+    this.http.get(this.API_URL);
+  }
+
+  fetchDividends(symbols: string[]) {
+    this.http.get(this.API_URL);
   }
 }

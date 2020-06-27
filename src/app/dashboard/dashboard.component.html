@@ -24,11 +24,11 @@
         <button mat-raised-button color="primary" (click)="toggleAddRows()">Add Rows</button>
       </div>
       <div *ngIf="addRowsModalEnabled">
-        <app-add-stock-form (addNewRow)="addNewStock($event)"></app-add-stock-form>
+        <app-add-stock-form (addNewRow)="addNewStock($event)" (closeForm)="toggleAddRows()"></app-add-stock-form>
       </div>
     </div>
     <div class="list-container">
-      <app-stock-table [dataSource]="rows$ | async"></app-stock-table>
+      <app-stock-table [dataSource]="rows$ | async" (removeRow)="removeRow($event)"></app-stock-table>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

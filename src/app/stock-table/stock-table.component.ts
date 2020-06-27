@@ -1,10 +1,10 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { StockDataService } from '../services/stock-data.service';
 import { CalculationsService } from '../services/calculations.service';
-import { StockTableItem, BaseRow } from '../models';
+import { FormattedRow, BaseRow } from '../models';
 import { FormatTableDataService } from '../services';
 
 @Component({
@@ -15,13 +15,17 @@ import { FormatTableDataService } from '../services';
 export class StockTableComponent {
   @Input()
   set dataSource(dataSource: BaseRow[]) {
-    this._dataSource = dataSource;
-    this.fetchAndCalculateData(this._dataSource);
+    if (dataSource) {
+      this._dataSource = dataSource;
+      this.fetchAndCalculateData(this._dataSource);
+    }
   }
+
+  @Output() removeRow: EventEmitter<string> = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<StockTableItem>;
+  @ViewChild(MatTable) table: MatTable<FormattedRow>;
 
   public _dataSource: BaseRow[];
 
@@ -61,7 +65,7 @@ export class StockTableComponent {
     ) {}
 
   async fetchAndCalculateData(rawData: BaseRow[]) {
-    this.tableData = await this.formatTableDataService.convertImportedData(rawData);
+    // this.tableData = await this.formatTableDataService.convertImportedData(rawData);
     this.table.dataSource = this.tableData;
     console.log('fetchAndCalculateData', this.tableData);
   }
@@ -104,5 +108,9 @@ export class StockTableComponent {
 
   getTotalAnnualIncome(): number {
     return this.calculationsService.getSum(this.tableData, 'annualIncome');
+  }
+
+  onClickRemove(symbol: string) {
+    this.removeRow.emit(symbol);
   }
 }

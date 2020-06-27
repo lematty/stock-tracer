@@ -1,4 +1,4 @@
-export interface StockTableItem {
+export interface FormattedRow {
   name?: string;
   symbol: string;
   sector?: string;

@@ -31,6 +31,6 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="close()">Close</button>
-    <button mat-raised-button color="primary" (click)="nextStock()">Add another stock</button>
+    <button mat-raised-button [disabled]="row.invalid" color="primary" (click)="nextStock()">Add another stock</button>
   </mat-card-actions>
 </mat-card>

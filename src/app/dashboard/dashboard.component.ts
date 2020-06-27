@@ -5,7 +5,7 @@ import { DataImportModalComponent } from '../data-import-modal/data-import-modal
 import { MatchData, BaseRow } from '../models';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
-import { addRow } from '../store/actions/stock.actions';
+import { addStock, removeStock } from '../store/actions/stock.actions';
 
 
 @Component({
@@ -36,14 +36,19 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleAddRows() {
-    this.addRowsModalEnabled = true;
+    this.addRowsModalEnabled = !this.addRowsModalEnabled;
   }
 
-  addNewStock(row: BaseRow) {
-    console.log('dashboard', row);
+  addNewStock(stock: BaseRow) {
+    console.log('dashboard', stock);
     // const updatedRows = this.populateRows();
-    // this.store.dispatch(addRow({ updatedRows }));
-    this.store.dispatch(addRow({ row }));
+    // this.store.dispatch(addStock({ updatedRows }));
+    this.store.dispatch(addStock({ stock }));
+    console.log('addStock Dispatched (Dashboard)')
+  }
+
+  removeRow(symbol: string) {
+    this.store.dispatch(removeStock({ symbol }));
   }
 
   close(reason: string) {

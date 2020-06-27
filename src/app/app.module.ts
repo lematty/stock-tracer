@@ -30,13 +30,13 @@ import { MatInputModule } from '@angular/material/input';
 import { CalculationsService, FileParseService, FormatTableDataService, StockDataService } from './services';
 
 // Ngrx Store
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import * as fromImport from './store/reducers/import.reducer';
-// import * as fromStock from './store/reducers/stock.reducer';
-import { baseRowsReducer, rowsReducer } from './store/reducers/stock.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import { stocksReducer } from './store/reducers/stock.reducer';
 import { AddStockFormComponent } from './add-stock-form/add-stock-form.component';
+import { StockEffects } from './store/effects/stock.effects';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -51,6 +51,7 @@ import { AddStockFormComponent } from './add-stock-form/add-stock-form.component
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    EffectsModule.forRoot([StockEffects]),
     HttpClientModule,
     MatButtonModule,
     MatCardModule,
@@ -65,7 +66,7 @@ import { AddStockFormComponent } from './add-stock-form/add-stock-form.component
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    StoreModule.forRoot({ rows: rowsReducer, baseRows: baseRowsReducer }, {}),
+    StoreModule.forRoot({ stocks: stocksReducer }, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     // MatStepperModule,
   ],
