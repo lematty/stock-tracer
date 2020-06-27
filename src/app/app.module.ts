@@ -32,7 +32,8 @@ import { CalculationsService, FileParseService, FormatTableDataService, StockDat
 // Ngrx Store
 import { StoreModule } from '@ngrx/store';
 import * as fromImport from './store/reducers/import.reducer';
-import * as fromStock from './store/reducers/stock.reducer';
+// import * as fromStock from './store/reducers/stock.reducer';
+import { baseRowsReducer, rowsReducer } from './store/reducers/stock.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AddStockFormComponent } from './add-stock-form/add-stock-form.component';
@@ -64,7 +65,7 @@ import { AddStockFormComponent } from './add-stock-form/add-stock-form.component
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    StoreModule.forRoot({ import: fromImport.reducer, stock: fromStock.reducer }, {}),
+    StoreModule.forRoot({ rows: rowsReducer, baseRows: baseRowsReducer }, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     // MatStepperModule,
   ],

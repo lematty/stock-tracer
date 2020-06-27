@@ -3,6 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DataImportModalComponent } from '../data-import-modal/data-import-modal.component';
 import { MatchData, BaseRow } from '../models';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '../store/app.state';
+import { addRow } from '../store/actions/stock.actions';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -13,10 +17,10 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
-  formattedImportData: any[] = [];
+  rows$ = this.store.pipe(select(state => state.baseRows));
   addRowsModalEnabled = false;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private store: Store<AppState>) {}
 
   ngOnInit(): void {
   }
@@ -37,7 +41,9 @@ export class DashboardComponent implements OnInit {
 
   addNewStock(row: BaseRow) {
     console.log('dashboard', row);
-    // this.store.
+    // const updatedRows = this.populateRows();
+    // this.store.dispatch(addRow({ updatedRows }));
+    this.store.dispatch(addRow({ row }));
   }
 
   close(reason: string) {
@@ -63,6 +69,6 @@ export class DashboardComponent implements OnInit {
       newRows.push(newRow);
       count++;
     });
-    this.formattedImportData = newRows;
+    // this.formattedImportData = newRows;
   }
 }

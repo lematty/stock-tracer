@@ -19,7 +19,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Add buy price</mat-label>
-        <input formControlName="buyPrice" matInput type="number" required>
+        <input formControlName="buyPrice" matInput type="number" (keyup.enter)="nextStock()" required>
         <mat-hint>Must be a number greater than 0</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="outline">
