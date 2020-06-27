@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StockDataService } from './stock-data.service';
-import { StockTableItem, ImportData } from '../models';
+import { StockTableItem, BaseRow } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class FormatTableDataService {
 
   constructor(private stockDataService: StockDataService) { }
 
-  async convertImportedData(rawData: ImportData[]): Promise<StockTableItem[]> {
+  async convertImportedData(rawData: BaseRow[]): Promise<StockTableItem[]> {
     const symbols = rawData.map(row => row.symbol);
     // const stockPrices = await this.stockDataService.fetchStockPrice(symbols);
     // const dividendPercentages = await this.stockDataService.fetchDividends(symbols);
@@ -17,7 +17,7 @@ export class FormatTableDataService {
     const dividendPercentages = rawData.map(() => this.createRandomNumber(1) / 100);
 
     let count = 0;
-    const formattedData: StockTableItem[] = rawData.map((row: ImportData) => {
+    const formattedData: StockTableItem[] = rawData.map((row: BaseRow) => {
       const marketPrice = stockPrices[count];
       const dividendYeild = dividendPercentages[count];
       const costBasis = this.getCostBasis(row.shares, row.buyPrice);

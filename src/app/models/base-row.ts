@@ -1,6 +1,5 @@
-export interface ImportData {
+export interface BaseRow {
   symbol: string;
-  name: string;
   shares: number;
   buyPrice: number;
   dividendYeild: number;

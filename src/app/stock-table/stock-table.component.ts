@@ -1,10 +1,10 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { StockDataService } from '../services/stock-data.service';
 import { CalculationsService } from '../services/calculations.service';
-import { StockTableItem, ImportData } from '../models';
+import { StockTableItem, BaseRow } from '../models';
 import { FormatTableDataService } from '../services';
 
 @Component({
@@ -14,7 +14,7 @@ import { FormatTableDataService } from '../services';
 })
 export class StockTableComponent {
   @Input()
-  set dataSource(dataSource: ImportData[]) {
+  set dataSource(dataSource: BaseRow[]) {
     this._dataSource = dataSource;
     this.fetchAndCalculateData(this._dataSource);
   }
@@ -23,7 +23,7 @@ export class StockTableComponent {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<StockTableItem>;
 
-  public _dataSource: ImportData[];
+  public _dataSource: BaseRow[];
 
   tableData = [];
 
@@ -60,7 +60,7 @@ export class StockTableComponent {
     private formatTableDataService: FormatTableDataService,
     ) {}
 
-  async fetchAndCalculateData(rawData: ImportData[]) {
+  async fetchAndCalculateData(rawData: BaseRow[]) {
     this.tableData = await this.formatTableDataService.convertImportedData(rawData);
     this.table.dataSource = this.tableData;
     console.log('fetchAndCalculateData', this.tableData);

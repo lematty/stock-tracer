@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="import-button">
-        <button mat-raised-button color="primary" (click)="openDialog()">Import Data</button>
+        <button mat-raised-button color="primary" (click)="openImportDialog()">Import Data</button>
       </div>
     </div>
   </mat-sidenav>
@@ -19,6 +19,12 @@
         <button mat-mini-fab color="primary" (click)="sidenav.open()">
           <mat-icon>menu</mat-icon>
         </button>
+      </div>
+      <div class="add-button" *ngIf="!addRowsModalEnabled">
+        <button mat-raised-button color="primary" (click)="toggleAddRows()">Add Rows</button>
+      </div>
+      <div *ngIf="addRowsModalEnabled">
+        <app-add-stock-form (addNewRow)="addNewStock($event)"></app-add-stock-form>
       </div>
     </div>
     <div class="list-container">

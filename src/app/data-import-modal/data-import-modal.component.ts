@@ -3,6 +3,9 @@ import { FileParseService } from '../services/file-parse.service';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ImportMatchTypes, ImportMatchNames } from '../models';
+import { Store, select } from '@ngrx/store';
+import { ImportState } from '@ngrx/store-devtools/src/actions';
+import { Observable } from 'rxjs';
 
 
 enum ImportTypes {
@@ -51,7 +54,11 @@ export class DataImportModalComponent {
 
   rank: MatchValidator = {};
 
-  constructor(public dialogRef: MatDialogRef<DataImportModalComponent>, private fileParseService: FileParseService) { }
+  constructor(
+    public dialogRef: MatDialogRef<DataImportModalComponent>,
+    private fileParseService: FileParseService,
+    private store: Store<ImportState>
+    ) { }
 
   changeFormStep(step: FormSteps) {
     this.currentStep = step;

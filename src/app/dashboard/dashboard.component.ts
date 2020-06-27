@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DataImportModalComponent } from '../data-import-modal/data-import-modal.component';
-import { MatchData } from '../models';
+import { MatchData, BaseRow } from '../models';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,13 +14,14 @@ export class DashboardComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   formattedImportData: any[] = [];
+  addRowsModalEnabled = false;
 
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
   }
 
-  openDialog() {
+  openImportDialog() {
     const dialogRef = this.dialog.open(DataImportModalComponent);
     dialogRef.afterClosed().subscribe((matchData: MatchData) => {
       if (matchData) {
@@ -28,6 +29,15 @@ export class DashboardComponent implements OnInit {
       }
       this.close('matched import data');
     });
+  }
+
+  toggleAddRows() {
+    this.addRowsModalEnabled = true;
+  }
+
+  addNewStock(row: BaseRow) {
+    console.log('dashboard', row);
+    // this.store.
   }
 
   close(reason: string) {
