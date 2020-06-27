@@ -28,6 +28,7 @@
       </div>
     </div>
     <div class="list-container">
+      {{ rows$ | async | json}}
       <app-stock-table [dataSource]="rows$ | async" (removeRow)="removeRow($event)"></app-stock-table>
     </div>
   </mat-sidenav-content>

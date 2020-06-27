@@ -1,10 +1,10 @@
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { StockDataService } from '../services/stock-data.service';
 import { CalculationsService } from '../services/calculations.service';
-import { FormattedRow, BaseRow } from '../models';
+import { FormattedRow } from '../models';
 import { FormatTableDataService } from '../services';
 
 @Component({
@@ -12,24 +12,14 @@ import { FormatTableDataService } from '../services';
   templateUrl: './stock-table.component.html',
   styleUrls: ['./stock-table.component.less']
 })
-export class StockTableComponent {
-  @Input()
-  set dataSource(dataSource: BaseRow[]) {
-    if (dataSource) {
-      this._dataSource = dataSource;
-      this.fetchAndCalculateData(this._dataSource);
-    }
-  }
+export class StockTableComponent implements OnInit {
+  @Input() dataSource: FormattedRow[];
 
   @Output() removeRow: EventEmitter<string> = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<FormattedRow>;
-
-  public _dataSource: BaseRow[];
-
-  tableData = [];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = [
@@ -63,23 +53,27 @@ export class StockTableComponent {
     private calculationsService: CalculationsService,
     private formatTableDataService: FormatTableDataService,
     ) {}
-
-  async fetchAndCalculateData(rawData: BaseRow[]) {
-    // this.tableData = await this.formatTableDataService.convertImportedData(rawData);
-    this.table.dataSource = this.tableData;
-    console.log('fetchAndCalculateData', this.tableData);
+  ngOnInit(): void {
+    console.log(this.dataSource);
+    // this.table.dataSource = [];
   }
 
+  // async fetchAndCalculateData(rawData: BaseRow[]) {
+  //   // this.tableData = await this.formatTableDataService.convertImportedData(rawData);
+  //   this.table.dataSource = this.tableData;
+  //   console.log('fetchAndCalculateData', this.tableData);
+  // }
+
   getAverageDividendYeild(): number {
-    return this.calculationsService.getAverage(this.tableData, 'dividendYeild');
+    return this.calculationsService.getAverage(this.dataSource, 'dividendYeild');
   }
 
   getAverageMarketPrice(): number {
-    return this.calculationsService.getAverage(this.tableData, 'marketPrice');
+    return this.calculationsService.getAverage(this.dataSource, 'marketPrice');
   }
 
   getAveragePrice(): number {
-    return this.calculationsService.getAverage(this.tableData, 'averagePrice');
+    return this.calculationsService.getAverage(this.dataSource, 'averagePrice');
   }
 
   getCostBasis(shares: number, averagePrice: number): number {
@@ -99,15 +93,15 @@ export class StockTableComponent {
   }
 
   getTotalShares(): number {
-    return this.calculationsService.getSum(this.tableData, 'shares');
+    return this.calculationsService.getSum(this.dataSource, 'shares');
   }
 
   getTotalAnnualDividend(): number {
-    return this.calculationsService.getSum(this.tableData, 'annualDividend');
+    return this.calculationsService.getSum(this.dataSource, 'annualDividend');
   }
 
   getTotalAnnualIncome(): number {
-    return this.calculationsService.getSum(this.tableData, 'annualIncome');
+    return this.calculationsService.getSum(this.dataSource, 'annualIncome');
   }
 
   onClickRemove(symbol: string) {

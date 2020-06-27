@@ -20,6 +20,13 @@ export class StockDataService {
     return formattedStock;
   }
 
+  removeStock(symbol: string): Observable<string> {
+    console.log('StockDataService');
+    // return this.http.delete<string>(this.API_URL, stock);
+    const removedSymbol = this.mockBackendService.removeStock(symbol);
+    return removedSymbol;
+  }
+
   fetchStockPrice(symbols: string[]) {
     this.http.get(this.API_URL);
   }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { BaseRow, FormattedRow } from '../models';
-import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +10,14 @@ export class MockBackendService {
   constructor() { }
 
   addStock(stock: BaseRow): Observable<FormattedRow> {
-    console.log('MockBackendService');
+    console.log('adding stock to database');
     const formattedRow: FormattedRow = this.formatRow(stock);
     return of(formattedRow);
+  }
+
+  removeStock(symbol: string): Observable<string> {
+    console.log('removing stock from database');
+    return of(symbol);
   }
 
   formatRow(stock: BaseRow): FormattedRow {

@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
-  rows$ = this.store.pipe(select(state => state.baseRows));
+  rows$ = this.store.pipe(select(state => state.stocks));
   addRowsModalEnabled = false;
 
   constructor(public dialog: MatDialog, private store: Store<AppState>) {}
@@ -40,11 +40,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addNewStock(stock: BaseRow) {
-    console.log('dashboard', stock);
-    // const updatedRows = this.populateRows();
-    // this.store.dispatch(addStock({ updatedRows }));
     this.store.dispatch(addStock({ stock }));
-    console.log('addStock Dispatched (Dashboard)')
   }
 
   removeRow(symbol: string) {

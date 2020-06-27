@@ -1,6 +1,5 @@
-import { BaseRow } from '../models';
+import { FormattedRow } from '../models';
 
 export interface AppState {
-  baseRows: BaseRow[];
-  rows: BaseRow[];
+  stocks: FormattedRow[];
 }
