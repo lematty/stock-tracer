@@ -20,25 +20,25 @@ export class StockEffects {
     )
   ));
 
-  removeStock$: Observable<Action> = createEffect(() => this.actions$.pipe(
-    ofType(StockActions.removeStock),
+  deleteStock$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(StockActions.deleteStock),
     concatMap((action) =>
-      this.stockDataService.removeStock(action.symbol).pipe(
-        map((symbol: string) => StockActions.removeStockSuccess({ symbol })),
-        catchError((error: Error) => of(StockActions.removeStockFail({ error }))),
+      this.stockDataService.deleteStock(action.symbol).pipe(
+        map((symbol: string) => StockActions.deleteStockSuccess({ symbol })),
+        catchError((error: Error) => of(StockActions.deleteStockFail({ error }))),
       )
     )
   ));
 
-  removeAllStocks$: Observable<Action> = createEffect(() => this.actions$.pipe(
-    ofType(StockActions.removeAllStocks),
+  clearStocks$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(StockActions.clearStocks),
     concatMap(() =>
-      this.stockDataService.removeAllStocks().pipe(
+      this.stockDataService.clearStocks().pipe(
         map(() => {
-          console.log('removeAllStocksSuccess action dispatching');
-          return StockActions.removeAllStocksSuccess();
+          console.log('clearStocks action dispatching');
+          return StockActions.clearStocksSuccess();
         }),
-        catchError((error: Error) => of(StockActions.removeAllStocksFail({ error }))),
+        catchError((error: Error) => of(StockActions.clearStocksFail({ error }))),
       )
     )
   ));

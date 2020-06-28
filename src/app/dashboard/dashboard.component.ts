@@ -5,8 +5,9 @@ import { DataImportModalComponent } from '../data-import-modal/data-import-modal
 import { MatchData, BaseRow } from '../models';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
-import { addStock, removeStock, removeAllStocks } from '../store/actions/stock.actions';
-import { selectStocks } from '../store/selectors';
+import { addStock, deleteStock, clearStocks } from '../store/actions/stock.actions';
+import { selectStocks } from '../store/selectors/stock.selector';
+import { StockState } from '../store/reducers/stock.reducer';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class DashboardComponent implements OnInit {
   rows$ = this.store.pipe(select(selectStocks));
   addRowsModalEnabled = false;
 
-  constructor(public dialog: MatDialog, private store: Store<AppState>) {}
+  constructor(public dialog: MatDialog, private store: Store<StockState>) {}
 
   ngOnInit(): void {
   }
@@ -45,11 +46,11 @@ export class DashboardComponent implements OnInit {
   }
 
   removeRow(symbol: string) {
-    this.store.dispatch(removeStock({ symbol }));
+    this.store.dispatch(deleteStock({ symbol }));
   }
 
   removeAllRows() {
-    this.store.dispatch(removeAllStocks());
+    this.store.dispatch(clearStocks());
   }
 
   close(reason: string) {

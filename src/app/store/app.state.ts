@@ -1,12 +1,12 @@
 import { FormattedRow } from '../models';
 
 export interface AppState {
-  table: {
-    stocks: FormattedRow[];
+  stocks: {
+    entities: FormattedRow[];
     errors: any;
   };
-  selections: {
-    selectedStocks: FormattedRow[];
+  selectedStocks: {
+    entities: FormattedRow[];
     errors: any;
   };
 }

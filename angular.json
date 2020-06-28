@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "stock-tracer"
+  "defaultProject": "stock-tracer",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

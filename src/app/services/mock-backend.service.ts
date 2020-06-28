@@ -16,12 +16,12 @@ export class MockBackendService {
     return of(formattedRow);
   }
 
-  removeStock(symbol: string): Observable<string> {
+  deleteStock(symbol: string): Observable<string> {
     console.log('removing stock from database');
     return of(symbol);
   }
 
-  removeAllStocks(): Observable<void> {
+  clearStocks(): Observable<void> {
     console.log('removing all stocks from database');
     return of();
   }

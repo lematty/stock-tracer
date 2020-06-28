@@ -24,14 +24,14 @@ export class StockDataService {
     return formattedStock;
   }
 
-  removeStock(symbol: string): Observable<string> {
+  deleteStock(symbol: string): Observable<string> {
     // return this.http.delete<string>(this.API_URL, stock);
-    const removedSymbol = this.mockBackendService.removeStock(symbol);
+    const removedSymbol = this.mockBackendService.deleteStock(symbol);
     return removedSymbol;
   }
 
-  removeAllStocks(): Observable<void> {
+  clearStocks(): Observable<void> {
     // return this.http.delete<string>(this.API_URL, stock);
-    return this.mockBackendService.removeAllStocks();
+    return this.mockBackendService.clearStocks();
   }
 }

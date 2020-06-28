@@ -1,36 +1,66 @@
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { Stock } from '../stock.model';
 import * as StockActions from '../actions/stock.actions';
-import { FormattedRow } from '../../models';
 
-export interface StockState {
-  stocks: FormattedRow[];
+export const stocksFeatureKey = 'stocks';
+
+export interface StockState extends EntityState<Stock> {
+  // additional entities state properties
   error: any;
 }
 
-export const initialStocksState: StockState = {
-  stocks: [],
+export const adapter: EntityAdapter<Stock> = createEntityAdapter<Stock>({
+  selectId: (stock) => stock.symbol,
+});
+
+export const initialState: StockState = adapter.getInitialState({
+  // additional entity state properties
   error: undefined,
-};
+});
 
-export const stocksReducer = createReducer<StockState>(
-  initialStocksState,
-  // on(StockActions.addStockSuccess, (state, { stock }) => state.concat({ ...stock })),
-  // on(StockActions.removeStockSuccess, (state, { symbol }) => state.filter((stock) => stock.symbol !== symbol)),
 
-  on(StockActions.addStockSuccess, (state, { stock }) => ({ ...state, stocks: [...state.stocks, stock] })),
-  on(StockActions.addStockFail, (state, error) => ({ ...state, error })),
-
-  on(StockActions.removeStockSuccess, (state, { symbol }) => {
-    const stocks = state.stocks.filter((stock) => stock.symbol !== symbol);
-    return { ...state, stocks };
-  }),
-  on(StockActions.removeStockFail, (state, error) => ({ ...state, error })),
-
-  on(StockActions.removeAllStocksSuccess, (state) => ({ ...state, stocks: [] })),
-  on(StockActions.removeAllStocksFail, (state, error) => ({ ...state, error })),
+export const stockReducer = createReducer(
+  initialState,
+  on(StockActions.addStockSuccess,
+    (state, action) => adapter.addOne(action.stock, state)
+  ),
+  on(StockActions.addStockFail,
+    (state, action) => ({ ...state, error: action.error })
+  ),
+  on(StockActions.upsertStock,
+    (state, action) => adapter.upsertOne(action.stock, state)
+  ),
+  on(StockActions.addStocks,
+    (state, action) => adapter.addMany(action.stocks, state)
+  ),
+  on(StockActions.upsertStocks,
+    (state, action) => adapter.upsertMany(action.stocks, state)
+  ),
+  on(StockActions.updateStock,
+    (state, action) => adapter.updateOne(action.stock, state)
+  ),
+  on(StockActions.updateStocks,
+    (state, action) => adapter.updateMany(action.stocks, state)
+  ),
+  on(StockActions.deleteStockSuccess,
+    (state, action) => adapter.removeOne(action.symbol, state)
+  ),
+  on(StockActions.deleteStocksSuccess,
+    (state, action) => adapter.removeMany(action.symbols, state)
+  ),
+  on(StockActions.loadStocks,
+    (state, action) => adapter.setAll(action.stocks, state)
+  ),
+  on(StockActions.clearStocks,
+    state => adapter.removeAll(state)
+  ),
 );
 
 
-// export function reducer(state: State | undefined, action: Action) {
-//   return stocksReducer(state, action);
-// }
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = adapter.getSelectors();

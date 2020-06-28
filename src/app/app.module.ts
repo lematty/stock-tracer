@@ -33,12 +33,13 @@ import { CalculationsService, FileParseService, FormatTableDataService, StockDat
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-// import { reducer } from './store/reducers/stock.reducer';
-import { selectedStocksReducer } from './store/reducers/selected-stocks.reducer';
-import { stocksReducer } from './store/reducers/stock.reducer';
+import { stockReducer } from './store/reducers/stock.reducer';
+// import { selectedStocksReducer } from './store/reducers/selected-stocks.reducer';
+// import { stocksReducer } from './store/reducers/stock.reducer';
 import { AddStockFormComponent } from './add-stock-form/add-stock-form.component';
-import { StockEffects } from './store/effects/stock.effects';
+// import { StockEffects } from './store/effects/stock.effects';
 import { environment } from '../environments/environment';
+import { StockEffects } from './store/effects/stock.effects';
 
 
 @NgModule({
@@ -68,8 +69,7 @@ import { environment } from '../environments/environment';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    StoreModule.forRoot({ table: stocksReducer, selections: selectedStocksReducer }, {}),
-    // StoreModule.forRoot({ stocks: reducer }, {}),
+    StoreModule.forRoot({ stocks: stockReducer }, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     // MatStepperModule,
   ],
