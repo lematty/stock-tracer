@@ -12,12 +12,18 @@ export class MockBackendService {
   addStock(stock: BaseRow): Observable<FormattedRow> {
     console.log('adding stock to database');
     const formattedRow: FormattedRow = this.formatRow(stock);
+    console.log('FORMATTED ROW', formattedRow);
     return of(formattedRow);
   }
 
   removeStock(symbol: string): Observable<string> {
     console.log('removing stock from database');
     return of(symbol);
+  }
+
+  removeAllStocks(): Observable<void> {
+    console.log('removing all stocks from database');
+    return of();
   }
 
   formatRow(stock: BaseRow): FormattedRow {
@@ -48,7 +54,6 @@ export class MockBackendService {
       yeildOnCost: 0,
       annualIncome: annualDividend,
     };
-    console.log('FORMATTED ROW', formattedRow);
     return formattedRow;
   }
 

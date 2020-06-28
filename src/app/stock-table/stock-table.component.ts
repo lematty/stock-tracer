@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { FormatTableDataService } from '../services';
   templateUrl: './stock-table.component.html',
   styleUrls: ['./stock-table.component.less']
 })
-export class StockTableComponent implements OnInit {
+export class StockTableComponent {
   @Input() dataSource: FormattedRow[];
 
   @Output() removeRow: EventEmitter<string> = new EventEmitter();
@@ -53,10 +53,6 @@ export class StockTableComponent implements OnInit {
     private calculationsService: CalculationsService,
     private formatTableDataService: FormatTableDataService,
     ) {}
-  ngOnInit(): void {
-    console.log(this.dataSource);
-    // this.table.dataSource = [];
-  }
 
   // async fetchAndCalculateData(rawData: BaseRow[]) {
   //   // this.tableData = await this.formatTableDataService.convertImportedData(rawData);

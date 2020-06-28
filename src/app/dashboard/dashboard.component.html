@@ -23,6 +23,9 @@
       <div class="add-button" *ngIf="!addRowsModalEnabled">
         <button mat-raised-button color="primary" (click)="toggleAddRows()">Add Rows</button>
       </div>
+      <div class="remove-all-button" *ngIf="!addRowsModalEnabled">
+        <button mat-raised-button color="warn" (click)="removeAllRows()">Remove All Rows</button>
+      </div>
       <div *ngIf="addRowsModalEnabled">
         <app-add-stock-form (addNewRow)="addNewStock($event)" (closeForm)="toggleAddRows()"></app-add-stock-form>
       </div>

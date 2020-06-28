@@ -9,29 +9,29 @@ import { Observable } from 'rxjs';
 })
 export class StockDataService {
 
-  API_URL = 'API URL';
+  API_URL = '../../assets/mock-database.json';
 
   constructor(private http: HttpClient, private mockBackendService: MockBackendService) { }
 
+  getStocks(): Observable<FormattedRow[]> {
+    const response = this.http.get<FormattedRow[]>(this.API_URL);
+    return response;
+  }
+
   addStock(stock: BaseRow): Observable<FormattedRow> {
-    console.log('StockDataService');
-    // return this.http.post<FormattedRow>(this.API_URL, stock);
+    // const response = this.http.post<FormattedRow>(this.API_URL, stock);
     const formattedStock = this.mockBackendService.addStock(stock);
     return formattedStock;
   }
 
   removeStock(symbol: string): Observable<string> {
-    console.log('StockDataService');
     // return this.http.delete<string>(this.API_URL, stock);
     const removedSymbol = this.mockBackendService.removeStock(symbol);
     return removedSymbol;
   }
 
-  fetchStockPrice(symbols: string[]) {
-    this.http.get(this.API_URL);
-  }
-
-  fetchDividends(symbols: string[]) {
-    this.http.get(this.API_URL);
+  removeAllStocks(): Observable<void> {
+    // return this.http.delete<string>(this.API_URL, stock);
+    return this.mockBackendService.removeAllStocks();
   }
 }

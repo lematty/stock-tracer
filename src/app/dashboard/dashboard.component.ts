@@ -5,7 +5,8 @@ import { DataImportModalComponent } from '../data-import-modal/data-import-modal
 import { MatchData, BaseRow } from '../models';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../store/app.state';
-import { addStock, removeStock } from '../store/actions/stock.actions';
+import { addStock, removeStock, removeAllStocks } from '../store/actions/stock.actions';
+import { selectStocks } from '../store/selectors';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
-  rows$ = this.store.pipe(select(state => state.stocks));
+  rows$ = this.store.pipe(select(selectStocks));
   addRowsModalEnabled = false;
 
   constructor(public dialog: MatDialog, private store: Store<AppState>) {}
@@ -45,6 +46,10 @@ export class DashboardComponent implements OnInit {
 
   removeRow(symbol: string) {
     this.store.dispatch(removeStock({ symbol }));
+  }
+
+  removeAllRows() {
+    this.store.dispatch(removeAllStocks());
   }
 
   close(reason: string) {

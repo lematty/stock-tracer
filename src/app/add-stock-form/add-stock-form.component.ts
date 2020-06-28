@@ -18,9 +18,6 @@ export class AddStockFormComponent implements OnInit {
 
   ngOnInit() {
     this.row = this.newRow();
-    // this.row.valueChanges.subscribe(data => {
-    //   console.log(data);
-    // });
   }
 
   close() {
