@@ -35,11 +35,10 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { stockReducer } from './store/reducers/stock.reducer';
 // import { selectedStocksReducer } from './store/reducers/selected-stocks.reducer';
-// import { stocksReducer } from './store/reducers/stock.reducer';
 import { AddStockFormComponent } from './add-stock-form/add-stock-form.component';
-// import { StockEffects } from './store/effects/stock.effects';
 import { environment } from '../environments/environment';
 import { StockEffects } from './store/effects/stock.effects';
+import { ChooseFileTypeComponent } from './choose-file-type/choose-file-type.component';
 
 
 @NgModule({
@@ -49,7 +48,8 @@ import { StockEffects } from './store/effects/stock.effects';
     DashboardComponent,
     DataImportModalComponent,
     MatchColumnsModalComponent,
-    AddStockFormComponent
+    AddStockFormComponent,
+    ChooseFileTypeComponent
   ],
   imports: [
     BrowserModule,

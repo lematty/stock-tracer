@@ -5,4 +5,5 @@ export const selectStoreState = createFeatureSelector<StockState>(stocksFeatureK
 
 
 export const selectStocks = createSelector(selectStoreState, selectAll);
+export const selectHeaders = createSelector(selectStoreState, (state) => state.ids);
 

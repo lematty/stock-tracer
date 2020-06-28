@@ -1,0 +1,16 @@
+<div class="choose-file-type-container">
+  <div class="choose-file-type-template">
+    <h1>Choose file type</h1>
+    <div class="select-type-buttons">
+      <div class="csv-button">
+        <button mat-raised-button color="primary" (click)="chooseDataType(FileTypes.CSV)">CSV</button>
+      </div>
+      <div class="json-button">
+        <button mat-raised-button color="primary" (click)="chooseDataType(FileTypes.JSON)">JSON</button>
+      </div>
+    </div>
+    <div class="cancel-button">
+      <button mat-raised-button (click)="cancel()">Back</button>
+    </div>
+  </div>
+</div>

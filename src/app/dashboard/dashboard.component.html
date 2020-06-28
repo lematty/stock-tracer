@@ -8,7 +8,10 @@
         </button>
       </div>
       <div class="import-button">
-        <button mat-raised-button color="primary" (click)="openImportDialog()">Import Data</button>
+        <button mat-raised-button color="primary" (click)="openFileTypeDialog(FileDirection.Import)">Import Data</button>
+      </div>
+      <div class="export-button">
+        <button mat-raised-button color="primary" (click)="openFileTypeDialog(FileDirection.Export)">Export Data</button>
       </div>
     </div>
   </mat-sidenav>
@@ -20,19 +23,20 @@
           <mat-icon>menu</mat-icon>
         </button>
       </div>
-      <div class="add-button" *ngIf="!addRowsModalEnabled">
-        <button mat-raised-button color="primary" (click)="toggleAddRows()">Add Rows</button>
+      <div class="table-buttons-container" *ngIf="!addRowsModalEnabled">
+        <div class="add-button table-buttons">
+          <button mat-raised-button color="primary" (click)="toggleAddRows()">Add Rows</button>
+        </div>
+        <div class="remove-all-button table-buttons">
+          <button mat-raised-button color="warn" (click)="removeAllRows()">Remove All Rows</button>
+        </div>
       </div>
-      <div class="remove-all-button" *ngIf="!addRowsModalEnabled">
-        <button mat-raised-button color="warn" (click)="removeAllRows()">Remove All Rows</button>
-      </div>
-      <div *ngIf="addRowsModalEnabled">
+      <div *ngIf="addRowsModalEnabled" class="table-container">
         <app-add-stock-form (addNewRow)="addNewStock($event)" (closeForm)="toggleAddRows()"></app-add-stock-form>
       </div>
     </div>
     <div class="list-container">
-      {{ rows$ | async | json}}
-      <app-stock-table [dataSource]="rows$ | async" (removeRow)="removeRow($event)"></app-stock-table>
+      <app-stock-table [dataSource]="stocks$ | async" (removeRow)="removeRow($event)"></app-stock-table>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

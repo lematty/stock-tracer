@@ -4,3 +4,10 @@ export enum BaseHeader {
   BuyPrice = 'buyPrice',
   DividendYield = 'dividendYield',
 }
+
+export const BASE_HEADER_LIST = [
+  BaseHeader.Symbol,
+  BaseHeader.Shares,
+  BaseHeader.BuyPrice,
+  BaseHeader.DividendYield,
+];

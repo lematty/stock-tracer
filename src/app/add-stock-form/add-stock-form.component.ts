@@ -12,12 +12,12 @@ export class AddStockFormComponent implements OnInit {
   @Output() addNewRow: EventEmitter<BaseRow> = new EventEmitter();
   @Output() closeForm: EventEmitter<void> = new EventEmitter();
 
-  row: FormGroup;
+  stock: FormGroup;
 
   constructor() { }
 
   ngOnInit() {
-    this.row = this.newRow();
+    this.stock = this.clearForm();
   }
 
   close() {
@@ -25,11 +25,11 @@ export class AddStockFormComponent implements OnInit {
   }
 
   nextStock() {
-    this.addNewRow.emit(this.row.value);
-    this.row = this.newRow();
+    this.addNewRow.emit(this.stock.value);
+    this.stock = this.clearForm();
   }
 
-  newRow(): FormGroup {
+  clearForm(): FormGroup {
     return new FormGroup({
       [BaseHeader.Symbol]: new FormControl('', [Validators.required, Validators.minLength(1)]),
       [BaseHeader.Shares]: new FormControl(0, [Validators.required, Validators.min(1), Validators.minLength(1)]),

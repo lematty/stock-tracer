@@ -1,14 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DataImportModalComponent } from '../data-import-modal/data-import-modal.component';
-import { MatchData, BaseRow } from '../models';
+import { MatchData, BaseRow, FileTypes, FileDirection } from '../models';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../store/app.state';
 import { addStock, deleteStock, clearStocks } from '../store/actions/stock.actions';
-import { selectStocks } from '../store/selectors/stock.selector';
+import { selectStocks, selectHeaders, selectStoreState } from '../store/selectors/stock.selector';
 import { StockState } from '../store/reducers/stock.reducer';
-
+import { ChooseFileTypeComponent } from '../choose-file-type/choose-file-type.component';
+import { ExportDataService } from '../services';
+import { Observable } from 'rxjs';
+import { Stock } from '../store/stock.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,15 +22,38 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
-  rows$ = this.store.pipe(select(selectStocks));
+  FileDirection = FileDirection;
+  stocks$ = this.store.pipe(select(selectStocks));
+  headers$ = this.store.pipe(select(selectHeaders));
   addRowsModalEnabled = false;
 
-  constructor(public dialog: MatDialog, private store: Store<StockState>) {}
+  constructor(public dialog: MatDialog, private store: Store<StockState>, private exportDataService: ExportDataService) {}
 
   ngOnInit(): void {
   }
 
+  openFileTypeDialog(direction: FileDirection) {
+    const fileTypeRef = this.dialog.open(ChooseFileTypeComponent);
+    fileTypeRef.afterClosed().subscribe((fileType: FileTypes) => {
+      if (fileType === FileTypes.CSV) {
+        console.log('INSIDE FileTypes.CSV');
+        if (direction === FileDirection.Export) {
+          console.log('INSIDE FileDirection.Export');
+          this.downloadCSVFile();
+        } else {
+          console.log('INSIDE FileDirection.Import');
+          this.openImportDialog();
+        }
+      } else if (fileType === FileTypes.JSON) {
+        console.log('INSIDE FileTypes.JSON');
+      } else {
+        console.log('CLOSED BY USER');
+      }
+    });
+  }
+
   openImportDialog() {
+    console.log('opening import data');
     const dialogRef = this.dialog.open(DataImportModalComponent);
     dialogRef.afterClosed().subscribe((matchData: MatchData) => {
       if (matchData) {
@@ -35,6 +61,13 @@ export class DashboardComponent implements OnInit {
       }
       this.close('matched import data');
     });
+  }
+
+  downloadCSVFile() {
+    let currentState: StockState;
+    this.store.pipe(select(selectStoreState), take(1)).subscribe((state) => currentState = state);
+    console.log(currentState);
+    this.exportDataService.downloadCSV(currentState.ids as string[], currentState.entities);
   }
 
   toggleAddRows() {
